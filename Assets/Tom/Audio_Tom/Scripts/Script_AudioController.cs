@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class Script_AudioController : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class Script_AudioController : MonoBehaviour
     [SerializeField] AudioClip menuMusic;
     [SerializeField] AudioClip playMusic;
     [SerializeField] string track;
+    public bool isPlaying;
 
     //singleton pattern for audio controller
     public static Script_AudioController Instance;
@@ -61,6 +63,11 @@ public class Script_AudioController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Update()
+    {
+        MusicCheck();
     }
 
     public void Audio_PlayUIClick()
@@ -178,28 +185,19 @@ public class Script_AudioController : MonoBehaviour
 
     }
 
-    public void Audio_BeginMenuMusc()
+    private void Audio_BeginPlayMusic()
     {
-        if (track != "menu")
+        if (SceneManager.GetActiveScene().name == "scene_1")
         {
-            sourceMusic.Stop();
-            sourceMusic.PlayOneShot(menuMusic, musicVolume);
-            track = "menu";
-        }
-
-
-    }
-
-    public void Audio_BeginPlayMusic()
-    {
-        if (track != "play")
-        {
-            sourceMusic.Stop();
+            //sourceMusic.Stop();
             sourceMusic.PlayOneShot(playMusic, musicVolume);
             track = "play";
         }
 
+
     }
+
+
 
     public void Audio_PauseMusic(bool musicIsPaused)
     {
@@ -212,4 +210,33 @@ public class Script_AudioController : MonoBehaviour
             sourceMusic.UnPause();
         }
     }
+
+    private void Audio_BeginMenuMusc()
+    {
+        if (SceneManager.GetActiveScene().name == "scene_mainmenu")
+        {
+            //sourceMusic.Stop();
+            sourceMusic.PlayOneShot(menuMusic, musicVolume);
+            track = "menu";
+        }
+
+
+    }
+
+    private void MusicCheck()
+    {
+        
+
+        if (!isPlaying)
+
+        {
+            sourceMusic.Stop();
+            Audio_BeginPlayMusic();
+            Audio_BeginMenuMusc();
+            isPlaying = true;
+        }
+    }
+
+    
+
 }

@@ -60,12 +60,12 @@ public class tester : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.N))
         {
-            Script_AudioController.Instance.Audio_BeginMenuMusc();
+            //Script_AudioController.Instance.Audio_BeginMenuMusc();
         }
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Script_AudioController.Instance.Audio_BeginPlayMusic();
+            //Script_AudioController.Instance.Audio_BeginPlayMusic();
         }
     }
 
